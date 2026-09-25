@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>التقرير المالي - رابطة التنمية للمرأة المسلمة</title>
+    <!-- استخدام خط المراعي (Almarai) -->
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e3a8a; 
+            --secondary-color: #166534; 
+            --border-color: #cbd5e1;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Almarai', sans-serif;
+            background-color: #e2e8f0; 
+            margin: 0;
+            padding: 15px 0; /* تقليل المسافة العلوية في المتصفح */
+            color: var(--text-dark);
+            line-height: 1.5;
+        }
+
+        /* محاكاة ورقة A4 وتوسيطها */
+        .a4-container {
+            background-color: #ffffff;
+            width: 210mm;
+            height: 297mm; 
+            margin: 0 auto;
+            /* تم تقليل الهامش العلوي إلى 8mm لسحب المحتوى للأعلى */
+            padding: 8mm 15mm 15mm 15mm; 
+            box-sizing: border-box;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            border-radius: 6px;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        /* ترويسة التقرير */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--primary-color);
+            padding-bottom: 10px; 
+            margin-bottom: 15px; 
+        }
+
+        .header-text h1 {
+            margin: 0 0 5px 0;
+            color: var(--primary-color);
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .header-text h2 {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .logo-box {
+            height: 85px; 
+            width: 100px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .logo-box img {
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* معلومات الإصدار */
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+            padding: 10px 15px;
+            border-right: 4px solid var(--primary-color);
+            border-radius: 4px;
+        }
+
+        /* الملاحظة التوضيحية */
+        .alert-note {
+            font-size: 13px;
+            color: #991b1b;
+            background-color: #fef2f2;
+            padding: 10px 15px;
+            border-radius: 4px;
+            border: 1px solid #fecaca;
+            border-right: 4px solid #ef4444;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* الجدول المالي */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 18px;
+            font-size: 14px; 
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 10px;
+            font-weight: 700;
+            border: 1px solid var(--primary-color);
+            text-align: center;
+        }
+
+        td {
+            padding: 7px 10px; 
+            border: 1px solid var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        tr:hover {
+            background-color: #f1f5f9;
+        }
+
+        /* تظليل عمود الإجمالي ليكون بارزاً */
+        td:last-child {
+            background-color: #f0f4f8;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .row-total td {
+            background-color: #e2e8f0 !important;
+            font-weight: 800;
+            color: var(--text-dark) !important;
+            font-size: 15px;
+            border-top: 2px solid var(--primary-color);
+        }
+
+        .highlight-text {
+            color: #b91c1c;
+            font-weight: 800;
+            font-size: 11px;
+            background: #fee2e2;
+            padding: 2px 6px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 3px;
+        }
+
+        /* بطاقات الخلاصة المالية */
+        .summary-title {
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 800;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .cards-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            flex: 1;
+            padding: 15px 10px; 
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+            transition: transform 0.2s;
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .card-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .card.highlight {
+            border-color: var(--secondary-color);
+            background-color: #f0fdf4;
+            border-width: 2px;
+            box-shadow: 0 4px 6px -1px rgba(22, 101, 52, 0.1);
+        }
+
+        .card.highlight .card-value {
+            color: var(--secondary-color);
+            font-size: 22px;
+        }
+
+        /* التوقيعات والختم بتنسيق واقعي */
+        .signatures {
+            display: flex;
+            justify-content: flex-end; 
+            margin-top: 15px; 
+            padding-left: 30px;
+        }
+
+        .sig-box {
+            text-align: center;
+            position: relative;
+        }
+
+        .sig-title {
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 2px; 
+            font-size: 16px;
+        }
+
+        .sig-name {
+            font-size: 14px;
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .sig-images {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: 110px; 
+            margin-top: -10px;
+        }
+
+        /* تنسيق صورة الختم */
+        .stamp-img {
+            max-height: 115px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.95;
+        }
+
+        /* تنسيق صورة التوقيع - تداخل واقعي فوق الختم */
+        .sign-img {
+            max-height: 70px;
+            width: auto;
+            position: absolute;
+            right: 40px; 
+            top: 25px;
+            z-index: 10;
+            mix-blend-mode: multiply; 
+        }
+
+        /* إعدادات الطباعة */
+        @page {
+            size: A4;
+            margin: 0; 
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+                margin: 0;
+                padding: 0;
+            }
+            .a4-container {
+                box-shadow: none;
+                margin: 0;
+                /* نفس التعديل يطبق عند الطباعة */
+                padding: 8mm 15mm 15mm 15mm;
+                width: 210mm;
+                height: 297mm;
+                border-radius: 0;
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="a4-container">
+        
+        <!-- الترويسة مع الشعار -->
+        <div class="header">
+            <div class="header-text">
+                <h1>رابطة التنمية للمرأة المسلمة</h1>
+                <h2>تقرير مالي حول توزيع مبالغ الكفالات والمصروفات</h2>
+            </div>
+            <div class="logo-box">
+                <!-- صورة الشعار -->
+                <img src="logo.jpg" alt="شعار جمعية IFEEF">
+            </div>
+        </div>
+
+        <!-- بيانات التقرير -->
+        <div class="meta-info">
+            <div><strong>الغرض من التقرير:</strong> توثيق توزيع الكفالات والمصاريف المتعلقة بتنفيذ المشروع.</div>
+            <div><strong>جهة الإعداد:</strong> الإدارة المالية - رابطة التنمية للمرأة المسلمة</div>
+        </div>
+
+        <!-- الملاحظة التوضيحية -->
+        <div class="alert-note">
+            <strong>* ملاحظة هامة:</strong> علماً بأن الكفالات كلها لمدة شهر واحد، ما عدا (أولاد في مركز تحفيظ القرآن) وكذلك (راتب رئيسة اللجنة)؛ لأن طلاب المركز كفالتهم لمدة سنة، ورئيسة اللجنة استلمت كفالتها لمدة ثلاثة أشهر. بارك الله فيكم وأحسن الله إليكم.
+        </div>
+
+        <!-- الجدول المالي -->
+        <table>
+            <thead>
+                <tr>
+                    <th width="5%">م</th>
+                    <th width="35%">الفئة / البيان</th>
+                    <th width="15%">تكلفة الوحدة</th>
+                    <th width="15%">العدد</th>
+                    <th width="30%">الإجمالي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>الأيتام</td><td>22 $</td><td>171</td><td>3,762 $</td></tr>
+                <tr><td>2</td><td>الدعاة</td><td>70 $</td><td>31</td><td>2,170 $</td></tr>
+                <tr><td>3</td><td>المحفظون</td><td>100 $</td><td>5</td><td>500 $</td></tr>
+                <tr><td>4</td><td>الأسر المتعففة</td><td>22 $</td><td>200</td><td>4,400 $</td></tr>
+                <tr><td>5</td><td>الأرامل</td><td>70 $</td><td>1</td><td>70 $</td></tr>
+                <tr><td>6</td><td>رئيسة اللجنة <br><span class="highlight-text">راتب 3 أشهر</span></td><td>250 $</td><td>3</td><td>750 $</td></tr>
+                <tr><td>7</td><td>البنزين</td><td>300 $</td><td>1</td><td>300 $</td></tr>
+                <tr><td>8</td><td>السائق</td><td>100 $</td><td>1</td><td>100 $</td></tr>
+                <tr><td>9</td><td>المساعدين (لجنة)</td><td>300 $</td><td>2</td><td>600 $</td></tr>
+                <tr><td>10</td><td>السكرتيرة (لجنة)</td><td>70 $</td><td>1</td><td>70 $</td></tr>
+                <tr><td>11</td><td>أولاد في مركز تحفيظ <br><span class="highlight-text">كفالة لمدة سنة</span></td><td>325 $</td><td>4</td><td>1,300 $</td></tr>
+                
+                <tr class="row-total">
+                    <td colspan="4" style="text-align: left; padding-left: 20px;">إجمالي المبالغ الموزعة والمصروفة:</td>
+                    <td>14,022 $</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- الخلاصة المالية (بطاقات) -->
+        <div class="summary-title">الخلاصة المالية للمشروع</div>
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-label">إجمالي المبلغ المحوَّل</div>
+                <div class="card-value">16,000 $</div>
+            </div>
+            <div class="card">
+                <div class="card-label">إجمالي التوزيع والمصروفات</div>
+                <div class="card-value" style="color: #b91c1c;">14,022 $</div>
+            </div>
+            <div class="card highlight">
+                <div class="card-label">المبلغ المتبقي النهائي</div>
+                <div class="card-value">1,978 $</div>
+            </div>
+        </div>
+
+        <!-- التوقيع والختم بتنسيق احترافي متداخل -->
+        <div class="signatures">
+            <div class="sig-box">
+                <div class="sig-title">رئيسة اللجنة</div>
+                <div class="sig-name">دارو علياء</div>
+                <div class="sig-images">
+                    <!-- صورة الختم -->
+                    <img src="stamp.png" alt="الختم الرسمي" class="stamp-img">
+                    <!-- صورة التوقيع -->
+                    <img src="sign.png" alt="توقيع رئيسة اللجنة" class="sign-img">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
